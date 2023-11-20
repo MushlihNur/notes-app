@@ -5,8 +5,11 @@ class NoteInput extends React.Component {
     super(props);
 
     this.state = {
-      title: "",
-      body: "",
+      note: {
+        title: "",
+        body: "",
+      },
+      titleLimit: 50,
     };
 
     this.onTitleChangeEventHandler = this.onTitleChangeEventHandler.bind(this);
@@ -15,40 +18,49 @@ class NoteInput extends React.Component {
   }
 
   onTitleChangeEventHandler(event) {
-    this.setState(() => {
+    const limit = 50;
+    const title = event.target.value.slice(0, limit);
+
+    this.setState((prevState) => {
       return {
-        title: event.target.value,
+        note: { ...prevState.note, title },
+        titleLimit: limit - title.length,
+        // title: event.target.value,
       };
     });
   }
 
   onBodyChangeEventHandler(event) {
-    this.setState(() => {
+    this.setState((prevState) => {
       return {
-        body: event.target.value,
+        note: { ...prevState.note, body: event.target.value },
+        // body: event.target.value,
       };
     });
   }
 
   onSubmitEventHandler(event) {
     event.preventDefault();
-    this.props.addNote(this.state);
+    this.props.addNote(this.state.note);
   }
 
   render() {
     return (
       <form onSubmit={this.onSubmitEventHandler}>
+        <p className="note-input__title__char-limit">
+          Sisa karakter: {this.state.titleLimit}
+        </p>
         <input
           type="text"
           className="note-input__title"
           placeholder="Ini adalah judul ..."
-          value={this.state.title}
+          value={this.state.note.title}
           onChange={this.onTitleChangeEventHandler}
         />
         <textarea
           className="note-input__body"
           placeholder="Tuliskan catatanmu disini ..."
-          value={this.state.body}
+          value={this.state.note.body}
           onChange={this.onBodyChangeEventHandler}
         ></textarea>
         <button type="submit">Buat</button>

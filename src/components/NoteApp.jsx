@@ -27,7 +27,7 @@ class NoteApp extends React.Component {
             id: +new Date(),
             title,
             body,
-            archive: false,
+            archived: false,
             createdAt: new Date(),
           },
         ],

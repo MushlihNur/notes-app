@@ -1,10 +1,14 @@
 import React from "react";
 import NoteItem from "./NoteItem";
 
-function NoteList({ notes, onDelete, onArchive }) {
+function NoteList({ notes, onDelete, onArchive, keyword }) {
+  const searchNotes = notes.filter((note) =>
+    note.title.toLowerCase().includes(keyword.toLowerCase())
+  );
+
   return (
     <div className="notes-list">
-      {notes.map((note) => (
+      {searchNotes.map((note) => (
         <NoteItem
           key={note.id}
           id={note.id}

@@ -47,7 +47,7 @@ class NoteApp extends React.Component {
       }
       return note;
     });
-    this.setState(notes);
+    this.setState({notes});
   }
 
   onSearchHandler(keyword) {
